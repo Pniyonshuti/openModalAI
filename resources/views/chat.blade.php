@@ -47,6 +47,10 @@
             <p class="text-gray-700 mb-6">
                 <q>
                     write a Python program to find those numbers which are divisible by 7 and multiples of 5, between 1500 and 2700 (both included)
+
+                    for i in range(1500,2701):
+                    if i%7==0 and i%5==0:
+                        print(" ",i)
                 </q>
             </p>
             <div class="border-t border-gray-300 pt-6">
@@ -63,155 +67,53 @@
                 <h2 class="text-lg font-bold mb-2 mt-6">Answer Verification</h2>
                 <div class="bg-gray-100 p-4 rounded-lg mb-6">
                     <code class="text-gray-800">
-                        <div id="typing-effect">
+                        <div >
                             @if(isset($generatedText))
-                                <p>{{ $generatedText }}</p>
-                                <div class="font-medium">
-                                    @php
-                                        $text = $generatedText;
+                                {{-- {{ $generatedText }} --}}
 
+                                <br>
 
-                                        $goodPointsIndex = strpos($text, 'Good Points:');
-                                        $improvementsIndex = strpos($text, 'Needed Improvements:');
+                                @php
+                                    $text = $generatedText;
+                                    $goodPointsStartMarker = 'Good points:';
+                                    $goodPointsEndMarker = 'Needed improvements:';
+                                    $improvementsStartMarker = 'Needed improvements:';
+                                    $overallMarker = 'Overall';
 
-                                        $hasGoodPoints = $goodPointsIndex !== false;
-                                        $hasImprovements = $improvementsIndex !== false;
+                                    $goodPointsStartPosition = strpos($text, $goodPointsStartMarker) + strlen($goodPointsStartMarker);
+                                    $goodPointsEndPosition = strpos($text, $goodPointsEndMarker);
+                                    $improvementsStartPosition = strpos($text, $improvementsStartMarker) + strlen($improvementsStartMarker);
+                                    $overallStartPosition = strpos($text, $overallMarker);
 
-                                        if ($hasGoodPoints) {
-                                            $goodPointsText = substr($text, $goodPointsIndex);
-                                        }
+                                    $goodPointsText = substr($text, $goodPointsStartPosition, $goodPointsEndPosition - $goodPointsStartPosition);
+                                    $improvementsText = substr($text, $improvementsStartPosition, $overallStartPosition - $improvementsStartPosition);
+                                    $overallText = substr($text, $overallStartPosition + strlen($overallMarker));
 
-                                        if ($hasImprovements) {
-                                            $improvementsText = substr($text, $improvementsIndex);
-                                        }
+                                    $goodPointsList = explode('- ', $goodPointsText);
+                                    $improvementsList = explode('- ', $improvementsText);
+                                @endphp
 
-                                        $points = explode('Needed Improvements:', $text);
-                                        $goodPoints = explode('-', $points[0]);
-                                        $improvements = explode('-', $points[1]);
-                                        $remainingText = trim($points[1], '-.');
-                                        $overall = explode('Overall', $remainingText)[1];
-                                        $remainingText = str_replace('Overall' . $overall, '', '');
-                                    @endphp
+                                <strong>Good Points:</strong>
+                                <ul>
+                                    @foreach ($goodPointsList as $index => $point)
+                                        @if (!empty($point))
+                                            <li><span class="mr-2 text-green-500">&#10003;</span>{{ trim($point) }}</li>
+                                        @endif
+                                    @endforeach
+                                </ul>
 
-                                    @if ($hasGoodPoints)
-                                        <p>
-                                            <strong>Good Points:</strong>
-                                            <ul class="list-disc ml-6">
-                                                @foreach ($goodPoints as $point)
-                                                    @if (trim($point) !== '')
-                                                        <li class="flex items-center">
-                                                            <span class="mr-2 text-green-500">&#10003;</span>{{ trim($point) }}
-                                                        </li>
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-                                        </p>
-                                    @endif
+                                <strong>Needed Improvements:</strong>
+                                <ul>
+                                    @foreach ($improvementsList as $index => $point)
+                                        @if (!empty($point))
+                                            <li><span class="mr-2 text-yellow-500">&#9888;</span>{{ trim($point) }}</li>
+                                        @endif
+                                    @endforeach
+                                </ul>
 
-                                    @if ($hasGoodPoints)
-                                        <p>
-                                            <strong>Needed Improvements:</strong>
-                                            <ul class="list-disc ml-6">
-                                                @foreach ($improvements as $improvement)
-                                                    @if (trim($improvement) !== '' && $improvement !== '.')
-                                                        <li class="flex items-center">
-                                                            <span class="mr-2 text-yellow-500">&#9888;</span>{{ trim($improvement) }}
-                                                        </li>
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-                                        </p>
-                                    @endif
-
-                                    @if ($hasGoodPoints || $hasImprovements)
-                                        <p>
-                                            <strong>Overall:</strong>
-                                            <br>
-                                            {{ trim($overall) }}
-                                        </p>
-                                    @else
-                                        <p>No feedback available.</p>
-                                    @endif
-
-                                    <p>
-                                        {{ trim($remainingText) }}
-                                    </p>
-                                </div>
-                            @endif
+                                <strong>Overall:</strong>
+                                <p>{{ trim($overallText) }}</p>
                         </div>
-
-                        {{-- <div class="font-medium">
-                            @php
-                                $text = 'Good Points: - The applicant used a for loop to iterate through the range given in the question. - The if statement correctly checks if the number is divisible by 7 and a multiple of 5. - The output format includes spaces before the printed number. Needed Improvements: - It would be more efficient to only print the numbers that meet the criteria rather than iterating over the entire range. - The variable name "i" is not very descriptive. Overall, based solely on this answer, the person could be classified as a junior developer.';
-
-
-                                $goodPointsIndex = strpos($text, 'Good Points:');
-                                $improvementsIndex = strpos($text, 'Needed Improvements:');
-
-                                $hasGoodPoints = $goodPointsIndex !== false;
-                                $hasImprovements = $improvementsIndex !== false;
-
-                                if ($hasGoodPoints) {
-                                    $goodPointsText = substr($text, $goodPointsIndex);
-                                }
-
-                                if ($hasImprovements) {
-                                    $improvementsText = substr($text, $improvementsIndex);
-                                }
-
-                                $points = explode('Needed Improvements:', $text);
-                                $goodPoints = explode('-', $points[0]);
-                                $improvements = explode('-', $points[1]);
-                                $remainingText = trim($points[1], '-.');
-                                $overall = explode('Overall', $remainingText)[1];
-                                $remainingText = str_replace('Overall' . $overall, '', '');
-                            @endphp
-
-                            @if ($hasGoodPoints)
-                                <p>
-                                    <strong>Good Points:</strong>
-                                    <ul class="list-disc ml-6">
-                                        @foreach ($goodPoints as $point)
-                                            @if (trim($point) !== '')
-                                                <li class="flex items-center">
-                                                    <span class="mr-2 text-green-500">&#10003;</span>{{ trim($point) }}
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </p>
-                            @endif
-
-                            @if ($hasGoodPoints)
-                                <p>
-                                    <strong>Needed Improvements:</strong>
-                                    <ul class="list-disc ml-6">
-                                        @foreach ($improvements as $improvement)
-                                            @if (trim($improvement) !== '' && $improvement !== '.')
-                                                <li class="flex items-center">
-                                                    <span class="mr-2 text-yellow-500">&#9888;</span>{{ trim($improvement) }}
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </p>
-                            @endif
-
-                            @if ($hasGoodPoints || $hasImprovements)
-                                <p>
-                                    <strong>Overall:</strong>
-                                    <br>
-                                    {{ trim($overall) }}
-                                </p>
-                            @else
-                                <p>No feedback available.</p>
-                            @endif
-
-                            <p>
-                                {{ trim($remainingText) }}
-                            </p>
-                        </div> --}}
-
                     </code>
                 </div>
             </div>

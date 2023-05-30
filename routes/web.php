@@ -28,8 +28,7 @@ Route::post('/process', function () {
 
     $userInput = $constant1 . " " . $dynamicVariable1 . " " . $constant2 . " " . $dynamicVariable2;
 
-
-    $apiKey = " "; // Replace with your actual API key
+    $apiKey = env('OPEN_AI_KEY');
 
     $headers = [
         'Content-Type: application/json',
