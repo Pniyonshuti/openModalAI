@@ -29,7 +29,7 @@ Route::post('/process', function () {
     $userInput = $constant1 . " " . $dynamicVariable1 . " " . $constant2 . " " . $dynamicVariable2;
 
 
-    $apiKey = "your-api-key"; // Replace with your actual API key
+    $apiKey = "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"; // Replace with your actual API key
 
     $headers = [
         'Content-Type: application/json',
