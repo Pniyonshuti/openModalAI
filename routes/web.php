@@ -20,13 +20,15 @@ Route::get('/', function () {
 Route::post('/process', function () {
     // $userInput = request('user_input');
     $userAnswer = request('user_input');
-
-    $constant1 = "Suppose you were a code reviewer, and you check an applicant's code with the following algorithm question asking to";
+    $constant1 = "Suppose you were a code reviewer, and you need to provide feedback in a written form after checking an applicant's code with the following algorithm question asking to";
+    $constant2 = "Point out in bulleted points, 1) the good points, 2) the needed improvements, and 3) the developer level by making sure it's one word to indicate if the candidate is a junior, mid-level or senior developer. Don't bother to mention any further explanation, or disclaimers. The applicant's answer is:";
+    // $constant1 = "Suppose you were a code reviewer, and you check an applicant's code with the following algorithm question asking to";
     $dynamicVariable1 = "write a Python program to find those numbers which are divisible by 7 and multiples of 5, between 1500 and 2700 (both included).";
-    $constant2 = "point out in bulleted points the good points and also the needed improvements, afterwards provide in one word if this person is a junior, mid-level or senior developer. The applicant's answer is:";
+    // $constant2 = "point out in bulleted points the good points and also the needed improvements, afterwards provide in one word if this person is a junior, mid-level or senior developer. The applicant's answer is:";
+    $additional= "remember to show good points: in a list , followed by needed improvenents and then after show overall which will determine the level of a developer.";
     $dynamicVariable2 = $userAnswer;
 
-    $userInput = $constant1 . " " . $dynamicVariable1 . " " . $constant2 . " " . $dynamicVariable2;
+    $userInput = $constant1 . " " . $dynamicVariable1 . " " . $constant2 . " " . $dynamicVariable2. " " . $additional;;
 
     $apiKey = env('OPEN_AI_KEY');
 

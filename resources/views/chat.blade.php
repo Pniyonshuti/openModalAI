@@ -70,9 +70,7 @@
                         <div >
                             @if(isset($generatedText))
                                 {{-- {{ $generatedText }} --}}
-
                                 <br>
-
                                 @php
                                     $text = $generatedText;
                                     $goodPointsStartMarker = 'Good points:';
@@ -113,6 +111,7 @@
 
                                 <strong>Overall:</strong>
                                 <p>{{ trim($overallText) }}</p>
+                            @endif
                         </div>
                     </code>
                 </div>
